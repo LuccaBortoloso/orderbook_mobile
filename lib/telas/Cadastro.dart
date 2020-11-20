@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:orderbook_aplicativo/models/Usuario.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -7,11 +9,39 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
+
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerSenha = TextEditingController();
   TextEditingController _controllerNome = TextEditingController();
-  TextEditingController _controllerSobrenome = TextEditingController();
 
+  _validarCampos(){
+    String nome = _controllerNome.text;
+    String email = _controllerEmail.text;
+    String senha = _controllerSenha.text;
+
+    if(nome.isNotEmpty){
+      if(email.isNotEmpty && email.contains("@")){
+        if(senha.isNotEmpty){
+          Usuario usuario = Usuario();
+          usuario.nomeUsuario = nome;
+          usuario.emailUsuario = email;
+          usuario.senhaUsuario = senha;
+
+          _cadastrarUsuario(usuario);
+        }
+      }
+    }
+  }
+
+  _cadastrarUsuario(Usuario usuario){
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    auth.createUserWithEmailAndPassword(email: usuario.emailUsuario, password: usuario.senhaUsuario).then((User){
+      db.collection("usuarios").doc(User.user.uid).set(usuario.toMap());
+    });
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,11 +104,7 @@ class _CadastroState extends State<Cadastro> {
                     child: Text("Cadastrar", style: TextStyle(color: Colors.white, fontSize: 20),),
                     padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                     onPressed: (){
-                      // ignore: deprecated_member_use
-                      var db = Firestore.instance;
-                      db.collection("usuarios").add({
-                        "email": _controllerEmail, "nome": _controllerNome, "senha": _controllerSenha});
-                      Navigator.of(context).pop();
+                      _validarCampos();
                     },
                   ),
                 )

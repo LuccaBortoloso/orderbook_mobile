@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:orderbook_aplicativo/models/Usuario.dart';
 import 'package:orderbook_aplicativo/telas/Cadastro.dart';
 import 'package:orderbook_aplicativo/telas/Menu.dart';
 
@@ -10,6 +13,56 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerSenha = TextEditingController();
+  bool _carregando = false;
+  String _mensagemErro = " ";
+
+  _validarCampos(){
+    String email = _controllerEmail.text;
+    String senha = _controllerSenha.text;
+
+    if(email.isNotEmpty && email.contains("@")){
+      if(senha.isNotEmpty){
+        Usuario usuario = Usuario();
+        usuario.emailUsuario = email;
+        usuario.senhaUsuario = senha;
+
+        _logarUsuario(usuario);
+      }
+    }
+
+  }
+
+  _logarUsuario(Usuario usuario){
+    setState(() {
+      _carregando = true;
+      FirebaseAuth auth = FirebaseAuth.instance;
+
+      auth.signInWithEmailAndPassword(email: usuario.emailUsuario, password: usuario.senhaUsuario).then((User){
+        _redirecionarPainel(User.user.uid);
+      }).catchError((error){
+        _mensagemErro = "Erro ao autenticar o usuário!";
+      });
+
+    });
+  }
+
+  _redirecionarPainel(String idUsuario) async{
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    DocumentSnapshot snapshot = await db.collection("usuarios").doc(idUsuario).get();
+    setState(() {
+      _carregando = false;
+    });
+    Navigator.pushReplacementNamed(context, "Menu");
+  }
+
+  _verificarUsuarioLogado() async{
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User usuarioLogado = await auth.currentUser;
+
+    if(usuarioLogado != null){
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
