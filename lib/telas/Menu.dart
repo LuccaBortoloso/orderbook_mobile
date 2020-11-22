@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orderbook_aplicativo/components/biblioteca_tile.dart';
 import 'package:orderbook_aplicativo/providers/bibliotecas.dart';
@@ -11,6 +12,12 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  _deslogarUsuario() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.signOut();
+    Navigator.pushReplacementNamed(context, "/");
+  }
+
   @override
   Widget build(BuildContext context) {
     final Bibliotecas bibliotecas = Provider.of(context);
@@ -22,6 +29,12 @@ class _MenuState extends State<Menu> {
             icon: Icon(Icons.add),
             onPressed: () {
               Navigator.pushNamed(context, "CreateBiblioteca", arguments: bibliotecas);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: (){
+              _deslogarUsuario();
             },
           )
         ],

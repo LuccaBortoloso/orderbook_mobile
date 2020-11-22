@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:orderbook_aplicativo/models/Usuario.dart';
 import 'package:orderbook_aplicativo/telas/Cadastro.dart';
@@ -60,8 +61,15 @@ class _HomeState extends State<Home> {
     User usuarioLogado = await auth.currentUser;
 
     if(usuarioLogado != null){
-
+      String idUsuario = usuarioLogado.uid;
+      _redirecionarPainel(idUsuario);
     }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    _verificarUsuarioLogado();
   }
 
   @override

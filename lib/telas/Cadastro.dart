@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orderbook_aplicativo/models/Usuario.dart';
@@ -42,8 +43,11 @@ class _CadastroState extends State<Cadastro> {
     });
     
   }
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Cadastro"),
@@ -105,7 +109,9 @@ class _CadastroState extends State<Cadastro> {
                     padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                     onPressed: (){
                       _validarCampos();
+                      Navigator.pop(context);
                     },
+                    color: Colors.lightBlue,
                   ),
                 )
               ],

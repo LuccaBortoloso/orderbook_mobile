@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:orderbook_aplicativo/providers/bibliotecas.dart';
 import 'package:orderbook_aplicativo/providers/livros.dart';
@@ -6,7 +7,9 @@ import 'package:orderbook_aplicativo/telas/Rotas.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
