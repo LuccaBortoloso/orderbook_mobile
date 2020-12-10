@@ -30,26 +30,27 @@ class BibliotecaTile extends StatelessWidget {
               color: Colors.red,
               onPressed: (){
                 showDialog(
-                  context: context,
-                  builder: (ctx) => AlertDialog(
-                    title: Text('Excluir Biblioteca'),
-                    content: Text('Tem certeza disso?'),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text('Sim'),
-                        onPressed: (){
-                          Provider.of<Bibliotecas>(context, listen: false).remove(biblioteca);
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FlatButton(
-                        child: Text('Não'),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        },
-                      )
-                    ],
-                  )
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text('Excluir Biblioteca'),
+                      content: Text('Tem certeza disso?'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('Sim'),
+                          onPressed: (){
+                            //Provider.of<Bibliotecas>(context, listen: false).remove(biblioteca);
+                            Provider.of<Bibliotecas>(context, listen: false).remove(biblioteca);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        FlatButton(
+                          child: Text('Não'),
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    )
                 );
               },
             ),
@@ -57,9 +58,9 @@ class BibliotecaTile extends StatelessWidget {
         ),
       ),
 
-        onTap: (){
-            Navigator.pushNamed(context, "Library");
-        },
+      onTap: (){
+        Navigator.pushNamed(context, "Library");
+      },
     );
   }
 }

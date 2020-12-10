@@ -41,7 +41,7 @@ class _CadastroState extends State<Cadastro> {
     auth.createUserWithEmailAndPassword(email: usuario.emailUsuario, password: usuario.senhaUsuario).then((User){
       db.collection("usuarios").doc(User.user.uid).set(usuario.toMap());
     });
-    
+
   }
 
 

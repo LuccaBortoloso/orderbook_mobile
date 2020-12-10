@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("imagens/fundo.jpg"), fit: BoxFit.cover)
+            image: DecorationImage(image: AssetImage("imagens/fundo.jpg"), fit: BoxFit.cover)
         ),
         padding: EdgeInsets.all(16),
         child: Center(
@@ -91,13 +91,13 @@ class _HomeState extends State<Home> {
                   keyboardType: TextInputType.emailAddress,
                   style: TextStyle(fontSize: 20),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                    hintText: "E-mail",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6)
-                    )
+                      contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                      hintText: "E-mail",
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6)
+                      )
                   ),
                 ),
                 TextField(
@@ -120,7 +120,7 @@ class _HomeState extends State<Home> {
                     child: Text("Entrar", style: TextStyle(color: Colors.white, fontSize: 20),),
                     padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                     onPressed: (){
-                      Navigator.popAndPushNamed(context, "Menu");
+                      _validarCampos();
                     },
                     color: Colors.lightBlue,
                   ),

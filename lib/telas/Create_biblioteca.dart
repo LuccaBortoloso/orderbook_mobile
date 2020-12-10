@@ -36,7 +36,7 @@ class _CreateBibliotecaState extends State<CreateBiblioteca> {
               if(isValid){
                 _form.currentState.save();
                 Provider.of<Bibliotecas>(context, listen: false).put(
-                  Biblioteca(id: _formData['id'], nome: _formData['nome'])
+                    Biblioteca(id: _formData['id'], nome: _formData['nome'])
                 );
                 Navigator.of(context).pop();
               }
